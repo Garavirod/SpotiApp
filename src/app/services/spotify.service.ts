@@ -10,21 +10,20 @@ export class SpotifyService {
 
   constructor(private http: HttpClient) { }
 
-  getNewReleases() {
+  getQuery(query: string){
+    const url = `https://api.spotify.com/v1/${query}`;
     const headers = new HttpHeaders({
       // tslint:disable-next-line: max-line-length
-      'Authorization': 'Bearer BQB9ekrqFm1aXvqmo2HMIG4Qs3piUHAeCmZZ4f0sVMAJFvNBhHpAES038iZhCybIh8LhhUnl5OZcD2T06nxnmCZO-ZKaIUYPYKvf2vlfyGP682PdG_YV1s0fE-m8pJvQ7TCkcBU89w'
+      'Authorization': 'Bearer BQBhjMCZ1ENK03hM2jY5zoEA3sBI8CyGirRfEkv1c0UGjKhqADMLDF2mZFQizD3I-NKWTSOOLVR2TCf3aq4Fy_QRZcv9tTIjJNJWW9Lmuz5HnH6BVCDddsQfJXrDtjED2VdDUYrevQ'
     });
-    return this.http.get('https://api.spotify.com/v1/browse/new-releases', { headers })
-            .pipe( map( (data: any) => data.albums.items));
+    return this.http.get(url,{headers})
+  }
+
+  getNewReleases() {
+    return this.getQuery('browse/new-releases?limit=20&offset=5').pipe( map( (data: any) => data.albums.items));
   }
 
   getArtista(termino: string){
-    const headers = new HttpHeaders({
-      // tslint:disable-next-line: max-line-length
-      'Authorization': 'Bearer BQD8nZlZKBP3JIvI22Ifnc_8bsfEUauRsmEdWx42ek1gBjNFvIeIi8Q7FMo4IcifExOccyPLnubIP68jaWnI5DIftPHiz-oUDPe5g-EeglpExFabBsDgJ2kBATl8_MxPvexEV5mOHA'
-    });
-    return this.http.get(`https://api.spotify.com/v1/search?query=${ termino }&type=artist&offset=5&limit=15`, { headers })
-          .pipe( map ( (data: any) => data.artists.items));
+    return this.getQuery(`search?query=${ termino }&type=artist&offset=5&limit=15`).pipe( map ( (data: any) => data.artists.items));
   }
 }
