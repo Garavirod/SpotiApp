@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tarjetas',
@@ -9,9 +10,23 @@ export class TarjetasComponent implements OnInit {
 
   @Input() items: any [] = [];
 
-  constructor() { }
+  // With this o the constructor, I have already all to do redirections
+  constructor( private router: Router) { 
+
+  }
 
   ngOnInit() {
+  }
+
+  verArtista( item: any ) {
+    let artistaId;
+    if (item.type === 'artist') {
+      artistaId = item.id;
+    } else {
+      artistaId = item.artists[0].id;
+    }
+    // The reaseon why this sintax '[]' it is because we'll use a parameter in url
+    this.router.navigate(['/artist', artistaId]);
   }
 
 }
