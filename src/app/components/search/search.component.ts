@@ -12,7 +12,7 @@ export class SearchComponent  {
   constructor(private spotify: SpotifyService) { }
   buscar(termino: string) {
     this.isLoading = true;
-    this.spotify.getArtista(termino).subscribe( (data: any) => {
+    this.spotify.getArtistas(termino).subscribe( (data: any) => {
       this.artistas = data;
       this.isLoading = false;
     });
