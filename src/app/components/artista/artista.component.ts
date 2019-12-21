@@ -16,8 +16,9 @@ export class ArtistaComponent {
   constructor(private router: ActivatedRoute, private spotify: SpotifyService) {
     // Usamos el parametro del url
     this.router.params.subscribe( params => {
-      this.getArtista(params[' id ']);
-      this.isLoading = true;
+      console.log(params[' id ']);
+      // this.getArtisttracks(params[' id ']);
+      // this.isLoading = true;
     });
   }
 
@@ -29,4 +30,13 @@ export class ArtistaComponent {
       this.isLoading = false;
     });
   }
+
+
+  getArtisttracks(id: string) {
+    this.spotify.getToptracks(id).subscribe( toptracks => {
+      console.log(toptracks);
+    });
+  }
 }
+
+// 13y7CgLHjMVRMDqxdx0Xdo
